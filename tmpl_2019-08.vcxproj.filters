@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="surface.cpp">
+      <Filter>template code</Filter>
+    </ClCompile>
+    <ClCompile Include="template.cpp">
+      <Filter>template code</Filter>
+    </ClCompile>
+    <ClCompile Include="Ninja.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="Object.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffs.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Spikes.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game.h" />
+    <ClInclude Include="surface.h">
+      <Filter>template code</Filter>
+    </ClInclude>
+    <ClInclude Include="template.h">
+      <Filter>template code</Filter>
+    </ClInclude>
+    <ClInclude Include="Ninja.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffs.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Spikes.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="template code">
+      <UniqueIdentifier>{bf32dd6e-4be7-4889-8ac6-49e7ee163c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Environment">
+      <UniqueIdentifier>{40eace69-aa7d-4fcc-9cc1-fa09469305ad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="_readme.txt">
+      <Filter>template code</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

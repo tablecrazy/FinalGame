@@ -15,29 +15,38 @@ namespace Tmpl8
 	{
 	}
 
-	void Spikes::Update()
+	void Spikes::Update(Ninja* player)
 	{
 		Draw(m_screen);
+		Collider(player);
 	}
 
 	void Spikes::Draw(Surface* screen)
 	{
-		spikes.Draw(screen, spikesPos.x, spikesPos.y);
+		//spikes.Draw(screen, spikesPos.x, spikesPos.y);
 
-		DrawCollider(screen, spikesPos.y);
+		DrawCollider(screen);
 	}
 
-	void Spikes::DrawCollider(Surface* s, float y)
+	void Spikes::DrawCollider(Surface* s)
 	{
-		s->Line(0, y - 100, 800, y - 100, 0xffffff);//top
+		s->Line(0, spikesPos.y, 800, spikesPos.y, 0xF12F25);
+		Move();
 	}
 
-	void Spikes::Collider(Ninja* player, float yPos)
+	void Spikes::Move()
 	{
-		
-		if (player->playerPos.y + 50 >= yPos - 100)
+		spikesPos.y -= speed;
+	}
+
+	void Spikes::Collider(Ninja* player)
+	{
+		if (player->playerPos.y > (spikesPos.y - 50))
 		{
-			player->speed = -player->speed * 0.9f;
+			player->playerPos.y = spikesPos.y - 50;
+			player->speed = -30;
+
+			player->TakeDamage(damage);
 		}
 	}
 };

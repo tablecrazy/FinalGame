@@ -10,11 +10,11 @@ namespace Tmpl8 {
 	public:
 		Spikes();
 		Spikes(Surface* screen);
-		void Update();
+		void Update(Ninja* player);
 		void Draw(Surface* screen);
 
-		vec2 spikesPos{ 0 , 300 };
-		int speed = 1;
+		vec2 spikesPos{ 0 , 900 };
+		float speed = 0.2;
 
 	private:
 
@@ -22,9 +22,12 @@ namespace Tmpl8 {
 		Surface* m_screen;
 		Ninja* ninja;
 
+		int damage = 25;
+
 		/*METHODS*/
-		void DrawCollider(Surface* s, float y);
-		void Collider(Ninja* player, float yPos);
+		void DrawCollider(Surface* s);
+		void Move();
+		void Collider(Ninja* player);
 	};
 
 };

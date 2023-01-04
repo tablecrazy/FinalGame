@@ -13,11 +13,12 @@ namespace Tmpl8 {
 		void Init();
 		void Update();		
 		void Draw(Surface* screen);
+		void TakeDamage(int damageTaken);
 
 		vec2 playerPos{ 0 , 0 };
 
 		int currentHealth = 100;
-		int shield = 0;
+		bool shield = false;
 		int speed = 1;
 		int horizontalSpeed = 5;
 
@@ -33,7 +34,7 @@ namespace Tmpl8 {
 
 		void PlayerGravity();
 		void Input();
-		void TakeDamage(int damageTaken);
+		
 		void DrawBorders(int xMin, int xMax, int yMin, int yMax);
 		void DrawCollider(Surface* s, float x, float y, float r);
 		void PlayerDebug();

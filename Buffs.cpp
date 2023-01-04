@@ -3,10 +3,12 @@
 #include "game.h"
 #include "Buffs.h"
 #include "windows.h"
+#include <sstream>
+#include <string>
 
 namespace Tmpl8
 {
-
+	std::ostringstream oss;
 	Buffs::Buffs() {}
 
 	Buffs::Buffs(Surface* screen) :
@@ -14,7 +16,7 @@ namespace Tmpl8
 	{
 	}
 
-	void Buffs::Update(Surface* s, BuffType buffType, Ninja* player, float posX, float posY)
+	void Buffs::Update(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY)
 	{
 		if (collided == false)
 		{
@@ -41,7 +43,8 @@ namespace Tmpl8
 			
 		}
 		
-		Collides(buffType, player, posX, posY);
+		Collides(s, buffType, player, spikes, posX, posY);
+		UIStats(s, player, buffType);
 	}
 
 	void Buffs::Draw(Surface* screen, float posX, float posY, int color)
@@ -59,7 +62,7 @@ namespace Tmpl8
 		}
 	}
 
-	void Buffs::Collides(BuffType buffType, Ninja* player, float posX, float posY)
+	void Buffs::Collides(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY)
 	{
 		if (player->playerPos.x <= posX && player->playerPos.x + 50 >= posX && player->playerPos.y <= posY && player->playerPos.y + 50 >= posY && collided == false)
 		{
@@ -77,13 +80,31 @@ namespace Tmpl8
 			{
 				player->shield = 1;
 				printf("I HATE NIGGERS\n");
+				//s->Print("Shiled", 50, 50, 0x00008b);
 			}
 			else if (buffType == BuffType::TimeSlow)
 			{
-				//Slow the spikes
-				printf("I HATE NIGGERS A LOT\n");
+				spikes->speed /= 2;
+				//s->Print("TimeSlow", 50, 50, 0xFFD700);
 			}
 			collided = true;
+		}
+	}
+
+	void Buffs::UIStats(Surface* s,Ninja* player, BuffType buffType)
+	{
+		int sVal = 10;
+		std::string newString;
+		std::stringstream stream;
+		stream << sVal;
+		stream >> newString;
+
+		int lenght = newString.length();
+		char* char_array = new char(lenght + 1);
+		strcpy(char_array, newString.c_str());
+		for (int i = 0; i < lenght; i++)
+		{
+			s->Print(char_array, 50, 50, 0x00008b);
 		}
 	}
 };

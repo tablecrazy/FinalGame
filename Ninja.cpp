@@ -61,10 +61,9 @@ namespace Tmpl8
 
 	void Ninja::TakeDamage(int damageTaken)
 	{
-		
-		if (shield == 1)
+		if (shield == true)
 		{
-			shield -= 1;
+			shield = false;
 		}
 		else currentHealth -= damageTaken;
 	}
@@ -104,9 +103,9 @@ namespace Tmpl8
 			playerPos.x = xMax;
 
 		}
-		if (playerPos.y > (900 - 50))
+		if (playerPos.y > (700 - 50))
 		{
-			playerPos.y = 900 - 50;
+			playerPos.y = 700 - 50;
 			speed = -speed * 0.8f;
 			isGrounded = true;
 		}

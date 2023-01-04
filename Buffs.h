@@ -2,6 +2,7 @@
 #include "template.h"
 #include "surface.h"
 #include "Ninja.h"
+#include "Spikes.h"
 
 namespace Tmpl8 {
 
@@ -18,7 +19,7 @@ namespace Tmpl8 {
 	public:
 		Buffs();
 		Buffs(Surface* screen);
-		void Update(Surface* s, BuffType type, Ninja* player, float posX, float posY);
+		void Update(Surface* s, BuffType type, Ninja* player, Spikes* spikes, float posX, float posY);
 		void Draw(Surface* screen, float posX, float posY, int color);
 		vec2 position{ 300 , 700 };
 
@@ -26,8 +27,11 @@ namespace Tmpl8 {
 
 		/*VARIABLES*/
 		Ninja* ninja;
+		Spikes* spikes;
 		Surface* m_screen;
+
 		bool collided = false;
+		
 
 		BuffType buffType;
 
@@ -35,7 +39,9 @@ namespace Tmpl8 {
 
 		void DrawCollider(Surface* s, float x, float y, float r, int color);
 
-		void Collides(BuffType buffType, Ninja* player, float posX, float posY);
+		void Collides(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY);
+
+		void UIStats(Surface* s,Ninja* player, BuffType buffType);
 
 	};
 

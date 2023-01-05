@@ -14,6 +14,8 @@ namespace Tmpl8 {
 		void Update();		
 		void Draw(Surface* screen);
 		void TakeDamage(int damageTaken);
+		void Death();
+		
 
 		vec2 playerPos{ 0 , 0 };
 

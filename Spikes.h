@@ -15,6 +15,7 @@ namespace Tmpl8 {
 
 		vec2 spikesPos{ 0 , 900 };
 		float speed = 0.2;
+		float newSpeed = speed;
 
 	private:
 

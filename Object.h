@@ -40,8 +40,6 @@ namespace Tmpl8 {
 		void SpawnRectangle(Surface* s, int x, int y, int init1, int init2, Ninja* player);
 
 		void SpawnTunnel(Surface* s, int x, int y, int init1, int init2, Ninja* player);
-
-		void SpawnWall(Surface* s, int x, int y, int init1, int init2, Ninja* player);
 	};
 
 };

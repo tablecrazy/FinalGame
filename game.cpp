@@ -16,17 +16,17 @@ namespace Tmpl8
 	// Initialize the application
 	// -----------------------------------------------------------
 	Object obj[3];
-	//vector<Buffs*>buffs(3);
-	//Spawner sp;
-	
-	bool objBool[3];
-	int objVal;
 
 	void Game::Init()
 	{
 		
 		this->ninja = new Ninja(screen);
+
+		ninja->playerPos.x = 10;
+		ninja->playerPos.y = 600;
+
 		this->spikes = new Spikes(screen);
+		this->key = new Key(screen);
 
 		for (int i = 0; i < buffsAmmount; i++)
 		{
@@ -51,16 +51,21 @@ namespace Tmpl8
 		deltaTime /= 1000;
 
 		screen->Clear(0);
-		ninja->Update();
-		spikes->Update(ninja);
-		obj[0].Spawn(screen, 500, 200, 75, 75, ninja, Type::RECTANGLE);
-		obj[1].Spawn(screen, 200, 200, 75, 75, ninja, Type::RECTANGLE);
 
-		buffs[0].Update(screen, BuffType::Health, ninja, spikes, 150, 400);
-		buffs[1].Update(screen, BuffType::Speed, ninja, spikes, 300, 400);
-		buffs[2].Update(screen, BuffType::Shield, ninja, spikes, 450, 400);
-		buffs[3].Update(screen, BuffType::TimeSlow, ninja, spikes, 600, 400);
-		//sp.Update(screen, deltaTime);
+		ninja->Update();
+
+		//spikes->Update(ninja);
+
+		key->Update(screen, ninja, 50, 50);
+
+		obj[0].Spawn(screen, 200, 300, 75, 75, ninja, Type::RECTANGLE);
+		obj[1].Spawn(screen, 500, 300, 75, 75, ninja, Type::RECTANGLE);
+		//obj[1].Spawn(screen, 350, 600, 100, 300, ninja, Type::TUNNEL);
+		
+		buffs[0].Update(screen, BuffType::Health, ninja, spikes, 150, 600, deltaTime);
+		buffs[1].Update(screen, BuffType::Speed, ninja, spikes, 300, 600, deltaTime);
+		buffs[2].Update(screen, BuffType::Shield, ninja, spikes, 450, 600, deltaTime);
+		buffs[3].Update(screen, BuffType::TimeSlow, ninja, spikes, 600, 600, deltaTime);
 		
 		m_time += deltaTime;
 		DifficultyProgression();

@@ -5,6 +5,7 @@
 #include "Spawner.h"
 #include "Buffs.h"
 #include "Spikes.h"
+#include "Key.h"
 #include <string>
 #include <vector>
 
@@ -37,8 +38,7 @@ public:
 
 	Ninja* ninja;
 	Spikes* spikes;
-	Projectile* projectile;
-	Spawner spawner;
+	Key* key;
 
 	float m_time;
 

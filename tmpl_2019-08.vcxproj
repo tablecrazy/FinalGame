@@ -224,6 +224,7 @@
   <ItemGroup>
     <ClCompile Include="Buffs.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Ninja.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -235,6 +236,7 @@
   <ItemGroup>
     <ClInclude Include="Buffs.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Key.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Projectile.h" />

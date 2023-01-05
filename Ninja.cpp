@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "Ninja.h"
 #include "Object.h"
 #include "windows.h"
@@ -17,7 +17,7 @@ namespace Tmpl8
 
 	void Ninja::Init()
 	{
-
+		
 	}
 
 	void Ninja::Update()
@@ -32,8 +32,8 @@ namespace Tmpl8
 		Input();
 
 		//PlayerDebug();
-		printf("health: %d \n", currentHealth);
-		printf("shield: %d \n", shield);
+		//printf("health: %d \n", currentHealth);
+		//printf("shield: %d \n", shield);
 	}
 
 	void Ninja::Draw(Surface* screen)
@@ -66,6 +66,15 @@ namespace Tmpl8
 			shield = false;
 		}
 		else currentHealth -= damageTaken;
+	}
+
+	void Ninja::Death()
+	{
+		if (currentHealth <= 0)
+		{
+			printf("DEAD\n");
+		}
+			
 	}
 
 	void Ninja::PlayerGravity()

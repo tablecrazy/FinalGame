@@ -15,6 +15,7 @@ namespace Tmpl8 {
 		void Draw(Surface* screen);
 		void TakeDamage(int damageTaken);
 		void Death();
+		void Input();
 		
 
 		vec2 playerPos{ 0 , 0 };
@@ -35,7 +36,7 @@ namespace Tmpl8 {
 		/*METHODS*/
 
 		void PlayerGravity();
-		void Input();
+		
 		
 		void DrawBorders(int xMin, int xMax, int yMin, int yMax);
 		void DrawCollider(Surface* s, float x, float y, float r);

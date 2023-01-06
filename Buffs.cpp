@@ -102,7 +102,7 @@ namespace Tmpl8
 			if (player->horizontalSpeed > 5)
 			{
 				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
+				printf("SpeedTime: %d\n", (int)m_time + 1);
 				UIStats(s, player, buffType, "Speed", (int)m_time, 20, 0xadd8e6);
 			}
 			if (m_time <= 0)
@@ -119,7 +119,7 @@ namespace Tmpl8
 			if (player->shield == true)
 			{
 				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
+				printf("ShieldTime: %d\n", (int)m_time + 1);
 				UIStats(s, player, buffType, "Shield", (int)m_time, 35, 0x0096FF);
 			}
 			if (m_time <= 0)
@@ -137,7 +137,7 @@ namespace Tmpl8
 			if (spikes->speed != spikes->newSpeed)
 			{
 				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
+				printf("SlowedTime: %d\n", (int)m_time + 1);
 				UIStats(s, ninja, buffType, "Time Slow", (int)m_time, 50, 0xFFD700);
 			}
 			if (m_time <= 0)

@@ -32,7 +32,7 @@ namespace Tmpl8
 		Input();
 
 		//PlayerDebug();
-		//printf("health: %d \n", currentHealth);
+		//printf("isGrounds: %d \n", isGrounded);
 		//printf("shield: %d \n", shield);
 	}
 
@@ -56,7 +56,7 @@ namespace Tmpl8
 		if (GetAsyncKeyState(VK_RIGHT)) playerPos.x += horizontalSpeed;
 		if (GetAsyncKeyState(VK_UP) && isColliding == true) playerPos.y -= horizontalSpeed;
 		if (GetAsyncKeyState(VK_DOWN) && isColliding == true) playerPos.y += horizontalSpeed;
-		if (GetAsyncKeyState(VK_SPACE) && isGrounded == true) speed *= 1.25f;
+		if (GetAsyncKeyState(VK_SPACE) && isGrounded == true) speed *= 1.25f;//printf("isGrounds: %d \n", isGrounded);
 	}
 
 	void Ninja::TakeDamage(int damageTaken)

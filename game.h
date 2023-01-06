@@ -48,9 +48,12 @@ private:
 	Surface* screen;
 
 	Object* object;
-	//Buffs* buffs;
+
 	int buffsAmmount = 5;
 	std::vector<Buffs>buffs;
+
+	int objAmmount = 2;
+	std::vector<Object> obj;
 
 	void DifficultyProgression();
 

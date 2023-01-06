@@ -18,9 +18,10 @@ namespace Tmpl8 {
 		Object();
 		Object(Surface* screen);
 		void Spawn(Surface* s, int x, int y, int init1, int init2, Ninja* player, Type type);
+		void IsColliding(bool isColliding, Ninja* player);
 
 		bool collides;
-		bool collidesWith;
+		bool IsAnywhereOnTheGround;
 		
 	private:
 
@@ -28,7 +29,7 @@ namespace Tmpl8 {
 		Surface* m_screen;
 
 		
-		
+		bool insideObj;
 
 		int init1 = 0, init2 = 0;
 
@@ -39,7 +40,6 @@ namespace Tmpl8 {
 		void SpawnRectangle(Surface* s, int x, int y, int init1, int init2, Ninja* player);
 
 		void SpawnTunnel(Surface* s, int x, int y, int init1, int init2, Ninja* player);
-		void SustainVelocity(Ninja* player);
 	};
 
 };

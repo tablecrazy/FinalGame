@@ -39,6 +39,7 @@ public:
 	Ninja* ninja;
 	Spikes* spikes;
 	Key* key;
+	Object object;
 
 	float m_time;
 
@@ -47,13 +48,10 @@ private:
 
 	Surface* screen;
 
-	Object* object;
-
+	
+	//Buffs* buffs;
 	int buffsAmmount = 5;
 	std::vector<Buffs>buffs;
-
-	int objAmmount = 2;
-	std::vector<Object> obj;
 
 	void DifficultyProgression();
 

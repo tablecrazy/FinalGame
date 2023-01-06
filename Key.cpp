@@ -7,7 +7,7 @@
 namespace Tmpl8
 {
 
-	Sprite key(new Surface("assets/key.png"), 1);
+	Sprite key(new Surface("assets/ball.png"), 1);
 	Key::Key() {}
 
 	Key::Key(Surface* screen) :

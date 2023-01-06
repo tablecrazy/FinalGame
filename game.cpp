@@ -6,7 +6,6 @@
 #include <string>
 #include <SDL.h>
 #include <vector>
-
 using namespace std;
 
 namespace Tmpl8
@@ -15,7 +14,7 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
-	Object obj[3];
+	
 
 	void Game::Init()
 	{
@@ -23,7 +22,7 @@ namespace Tmpl8
 		this->ninja = new Ninja(screen);
 
 		ninja->playerPos.x = 200;
-		ninja->playerPos.y = 0;
+		ninja->playerPos.y = 20;
 
 		this->spikes = new Spikes(screen);
 		this->key = new Key(screen);
@@ -31,6 +30,11 @@ namespace Tmpl8
 		for (int i = 0; i < buffsAmmount; i++)
 		{
 			buffs.push_back(Buffs{});
+		}
+
+		for (int i = 0; i < objAmmount; i++)
+		{
+			obj.push_back(Object{});
 		}
 	}
 	
@@ -47,7 +51,10 @@ namespace Tmpl8
 	// -----------------------------------------------------------
 	void Game::Tick(float deltaTime)
 	{
+		
+
 		srand(getpid());
+
 		deltaTime /= 1000;
 
 		screen->Clear(0);
@@ -58,15 +65,13 @@ namespace Tmpl8
 
 		key->Update(screen, ninja, 50, 50);
 
-		object.Spawn(screen, 200, 300, 75, 75, ninja, Type::RECTANGLE);
-		object.Spawn(screen, 400, 300, 75, 75, ninja, Type::RECTANGLE);
-		//obj[0].Spawn(screen, 200, 300, 75, 75, ninja, Type::RECTANGLE);
-		//obj[0].Spawn(screen, 400, 300, 75, 75, ninja, Type::RECTANGLE);
-		//obj[1].Spawn(screen, 350, 600, 100, 300, ninja, Type::TUNNEL);
+		obj[0].Spawn(screen, 200, 300, 75, 75, ninja, Type::RECTANGLE);
+		obj[1].Spawn(screen, 500, 300, 75, 75, ninja, Type::TUNNEL);
+		//obj[0].Spawn(screen, 500, 300, 75, 150, ninja, Type::TUNNEL);
 		
-		buffs[0].Update(screen, BuffType::Health, ninja, spikes, 150, 600, deltaTime);
+		buffs[0].Update(screen, BuffType::TimeSlow, ninja, spikes, 150, 600, deltaTime);
 		buffs[1].Update(screen, BuffType::Speed, ninja, spikes, 300, 600, deltaTime);
-		buffs[2].Update(screen, BuffType::Shield, ninja, spikes, 450, 600, deltaTime);
+		buffs[2].Update(screen, BuffType::Speed, ninja, spikes, 450, 600, deltaTime);
 		buffs[3].Update(screen, BuffType::TimeSlow, ninja, spikes, 600, 600, deltaTime);
 		
 		m_time += deltaTime;
@@ -74,12 +79,14 @@ namespace Tmpl8
 		
 	}
 
+
 	void Game::DifficultyProgression()
 	{
 
 		if (m_time >= 5 && m_time <= 10)
 		{
 			diffLevel = DifficultyLevel::NORMAL;
+			
 		}
 		else if (m_time >= 10 && m_time <= 15)
 		{

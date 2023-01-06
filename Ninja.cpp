@@ -32,8 +32,7 @@ namespace Tmpl8
 		Input();
 
 		//PlayerDebug();
-		//printf("Grounded: %d \n", isGrounded);
-		//printf("shield: %d \n", shield);
+		//printf("isGrounds: %d \n", isGrounded);
 	}
 
 	void Ninja::Draw(Surface* screen)
@@ -48,6 +47,8 @@ namespace Tmpl8
 		}
 
 		DrawCollider(screen, playerPos.x + 25, playerPos.y + 25, 25);
+		Stats(screen, "Health: ", currentHealth, 10, 0x96FF00);
+		Stats(screen, "Speed: ", horizontalSpeed, 25, 0xadd8e6);
 	}
 
 	void Ninja::Input()
@@ -93,6 +94,28 @@ namespace Tmpl8
 		}
 	}
 
+	void Ninja::Stats(Surface* s, std::string strVal, int intVal, float yPos, int color)
+	{
+		int sVal = intVal;
+		std::string str = strVal, intStr;
+		std::stringstream stream;
+		stream << sVal;
+		stream >> intStr;
+
+		int ilenght = intStr.length();
+		char* ichar_array = new char(ilenght + 1);
+		strcpy(ichar_array, intStr.c_str());
+
+		int lenght = str.length();
+		char* char_array = new char(lenght + 1);
+		strcpy(char_array, str.c_str());
+
+		for (int i = 0; i < lenght; i++)
+			s->Print(char_array, 720, yPos, color);
+		for (int i = 0; i < ilenght; i++)
+			s->Print(ichar_array, 760, yPos, color);
+	}
+
 	void Ninja::PlayerDebug()
 	{
 		printf("Speed: %d \n", speed);
@@ -116,11 +139,11 @@ namespace Tmpl8
 		{
 			playerPos.y = 700 - 50;
 			speed = -speed * 0.8f;
-			//isGrounded = true;
+			isGrounded = true;
 		}
 		else
 		{
-			//isGrounded = false;
+			isGrounded = false;
 		}
 		if (playerPos.y < (0))
 		{

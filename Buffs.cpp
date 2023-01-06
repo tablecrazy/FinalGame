@@ -48,11 +48,6 @@ namespace Tmpl8
 		}
 		
 		Collides(s, buffType, player, spikes, posX, posY, deltatime);
-
-		HealthPrint(s, buffType, player);
-		SpeedBuffCheck(s, buffType, player, deltatime);
-		ShieldBuffCheck(s, buffType, player, deltatime);
-		TimeSlowBuffCheck(s, buffType, spikes, deltatime);
 	}
 
 	void Buffs::Draw(Surface* screen, float posX, float posY, int color)
@@ -74,51 +69,26 @@ namespace Tmpl8
 	{
 		if (player->playerPos.x <= posX && player->playerPos.x + 50 >= posX && player->playerPos.y <= posY && player->playerPos.y + 50 >= posY && collided == false)
 		{
+			
 			if (buffType == BuffType::Health)
 			{
-				player->currentHealth += 25;
+				//player->currentHealth += 25;
 			}
 			if (buffType == BuffType::Speed)
 			{
-				player->horizontalSpeed += 2;
+				//player->horizontalSpeed += 5;
 			}
 			else if (buffType == BuffType::Shield)
 			{
-				player->shield = 1;
+				//player->shield = 1;
+				//ShieldBuff();
 			}
 			else if (buffType == BuffType::TimeSlow)
 			{
-				spikes->speed /= 2;
+				//spikes->speed /= 2;
+				//TimeSlowBuff();
 			}
 			collided = true;
-
-			
-		}
-	}
-
-	void Buffs::HealthPrint(Surface* s, BuffType buffType, Ninja* player)
-	{
-		if (buffType == BuffType::Health)
-		{
-			UIStats(s, player, buffType, "Health", player->currentHealth, 20, 0xFFD700);
-		}
-		
-	}
-	
-	void Buffs::SpeedBuffCheck(Surface* s, BuffType buffType, Ninja* player, float deltatime)
-	{
-		if (buffType == BuffType::Speed)
-		{
-			if (player->horizontalSpeed > 5)
-			{
-				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
-				UIStats(s, player, buffType, "Speed", (int)m_time, 35, 0xadd8e6);
-			}
-			if (m_time <= 0)
-			{
-				player->horizontalSpeed = 5;
-			}
 		}
 	}
 
@@ -129,8 +99,8 @@ namespace Tmpl8
 			if (player->shield == true)
 			{
 				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
-				UIStats(s, player, buffType, "Shield", (int)m_time, 50, 0x0096FF);
+				printf("ShieldTime: %d\n", (int)m_time + 1);
+				UIStats(s, player, buffType, "Shield", (int)m_time, 35, 0x0096FF);
 			}
 			if (m_time <= 0)
 			{
@@ -147,8 +117,8 @@ namespace Tmpl8
 			if (spikes->speed != spikes->newSpeed)
 			{
 				m_time -= deltatime;
-				printf("%d\n", (int)m_time + 1);
-				UIStats(s, ninja, buffType, "Time Slow", (int)m_time, 65, 0xFFD700);
+				printf("SlowedTime: %d\n", (int)m_time + 1);
+				UIStats(s, ninja, buffType, "Time Slow", (int)m_time, 50, 0xFFD700);
 			}
 			if (m_time <= 0)
 			{
@@ -173,14 +143,7 @@ namespace Tmpl8
 		char* char_array = new char(lenght + 1);
 		strcpy(char_array, str.c_str());
 		
-		if (buffType == BuffType::Health)
-		{
-			for (int i = 0; i < lenght; i++)
-				s->Print(char_array, 720, yPos, color);
 
-			for (int i = 0; i < ilenght; i++)
-				s->Print(ichar_array, 760, yPos, color);
-		}
 		if (buffType == BuffType::Speed)
 		{
 			for (int i = 0; i < lenght; i++)

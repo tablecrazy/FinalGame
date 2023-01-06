@@ -44,11 +44,7 @@ namespace Tmpl8 {
 
 		void Collides(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY, float deltatime);
 
-		void HealthPrint(Surface* s, BuffType buffType, Ninja* player);
-
 		void UIStats(Surface* s, Ninja* player, BuffType buffType, std::string strVal, int intVal, float yPos, int color);
-
-		void SpeedBuffCheck(Surface* s, BuffType buffType, Ninja* player, float deltatime);
 
 		void ShieldBuffCheck(Surface* s, BuffType buffType, Ninja* player, float deltatime);
 

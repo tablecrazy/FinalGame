@@ -2,6 +2,8 @@
 #include "template.h"
 #include "surface.h"
 #include "windows.h"
+#include <string>
+#include <sstream>
 
 namespace Tmpl8 {
 
@@ -15,6 +17,7 @@ namespace Tmpl8 {
 		void Draw(Surface* screen);
 		void TakeDamage(int damageTaken);
 		void Death();
+		void Input();
 		
 
 		vec2 playerPos{ 0 , 0 };
@@ -26,6 +29,7 @@ namespace Tmpl8 {
 
 		bool isGrounded = false;
 		bool isColliding = false;
+		bool shadowMode = false;
 
 	private:
 
@@ -35,10 +39,11 @@ namespace Tmpl8 {
 		/*METHODS*/
 
 		void PlayerGravity();
-		void Input();
+		
 		
 		void DrawBorders(int xMin, int xMax, int yMin, int yMax);
 		void DrawCollider(Surface* s, float x, float y, float r);
+		void Stats(Surface* s, std::string strVal, int intVal, float yPos, int color);
 		void PlayerDebug();
 		
 	};

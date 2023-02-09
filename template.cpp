@@ -378,7 +378,7 @@ int main( int argc, char **argv )
 				exitapp = 1;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE) 
+				if (event.key.keysym.sym == SDLK_BACKSPACE)
 				{
 					exitapp = 1;
 					// find other keys here: http://sdl.beuc.net/sdl.wiki/SDLKey
@@ -389,7 +389,7 @@ int main( int argc, char **argv )
 				game->KeyUp( event.key.keysym.scancode );
 				break;
 			case SDL_MOUSEMOTION:
-				game->MouseMove( event.motion.xrel, event.motion.yrel );
+				game->MouseMove( event.motion.x, event.motion.y );
 				break;
 			case SDL_MOUSEBUTTONUP:
 				game->MouseUp( event.button.button );

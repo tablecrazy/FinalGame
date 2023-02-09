@@ -1,11 +1,12 @@
 #pragma once
 #include "Ninja.h"
-#include "Projectile.h"
 #include "Object.h"
-#include "Spawner.h"
 #include "Buffs.h"
 #include "Spikes.h"
-#include "Key.h"
+#include "MapGenerator.h"
+#include "Button.h"
+#include "SDL_events.h"
+#include "SDL_audio.h"
 #include <string>
 #include <vector>
 
@@ -19,6 +20,15 @@ namespace Tmpl8 {
 		BALLIN = 3//name idea: BALLIN
 	};
 
+	enum class GameState
+	{
+		mainMenu,
+		game,
+		paused,
+		death,
+		win
+	};
+
 class Surface;
 class Game
 {
@@ -29,37 +39,56 @@ public:
 	void Shutdown();
 	void Tick( float deltaTime );
 	void MouseUp( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseDown( int button ) { /* implement if you want to detect mouse button presses */ }
-	void MouseMove( int x, int y ) { /* implement if you want to detect mouse movement */ }
+	void MouseDown(int button);
+	void MouseMove(int x, int y);
 	void KeyUp( int key ) { /* implement if you want to handle keys */ }
 	void KeyDown( int key ) { /* implement if you want to handle keys */ }
 
 	DifficultyLevel diffLevel{ DifficultyLevel::EASY };
 
 	Ninja* ninja;
-	Spikes* spikes;
-	Key* key;
 
-	float m_time;
+	Spikes* spikes;
+
+	MapGenerator* mapGenerator;
 
 private:
 	
-
 	Surface* screen;
 
-	Object* object;
+	float m_time;
+
+	int introDialogue;
+
+	float introNinjaFrame = 0;
+
+	float fakeNinjaPosition = -1000;
+	float fakeNinjaSpeed = 0;
+	bool fakeNinjaGround = false;
+
+	bool pressed = false;
 
 	int buffsAmmount = 5;
 	std::vector<Buffs>buffs;
 
-	int objAmmount = 2;
+	int objAmmount = 20;
 	std::vector<Object> obj;
+
+	int buttonAmmount = 10;
+	std::vector<Button> button;
+
+	vec2 mousePos;
+
+	GameState gameState = GameState::mainMenu;
 
 	void DifficultyProgression();
 
 	void TimePassed(float time);
 
-	
+	void Intro()
+	{
+
+	}
 };
 
 }; // namespace Tmpl8

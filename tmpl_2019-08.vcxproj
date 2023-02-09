@@ -223,9 +223,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BouncingShuriken.cpp" />
     <ClCompile Include="Buffs.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="Key.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Ninja.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -235,9 +238,12 @@
     <ClCompile Include="template.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BouncingShuriken.h" />
     <ClInclude Include="Buffs.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Key.h" />
+    <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Projectile.h" />

@@ -8,9 +8,6 @@
     <ClCompile Include="template.cpp">
       <Filter>template code</Filter>
     </ClCompile>
-    <ClCompile Include="Ninja.cpp" />
-    <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Object.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
@@ -23,6 +20,24 @@
     <ClCompile Include="Key.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
+    <ClCompile Include="Ninja.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>CurrentlyScrapped</Filter>
+    </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>CurrentlyScrapped</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGenerator.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="BouncingShuriken.cpp">
+      <Filter>Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />
@@ -32,9 +47,6 @@
     <ClInclude Include="template.h">
       <Filter>template code</Filter>
     </ClInclude>
-    <ClInclude Include="Ninja.h" />
-    <ClInclude Include="Projectile.h" />
-    <ClInclude Include="Spawner.h" />
     <ClInclude Include="Object.h">
       <Filter>Environment</Filter>
     </ClInclude>
@@ -47,6 +59,24 @@
     <ClInclude Include="Key.h">
       <Filter>Environment</Filter>
     </ClInclude>
+    <ClInclude Include="Ninja.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>CurrentlyScrapped</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>CurrentlyScrapped</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGenerator.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="BouncingShuriken.h">
+      <Filter>Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="template code">
@@ -54,6 +84,15 @@
     </Filter>
     <Filter Include="Environment">
       <UniqueIdentifier>{40eace69-aa7d-4fcc-9cc1-fa09469305ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{16eb5564-f3ec-480b-b7b6-08d2fe900d8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CurrentlyScrapped">
+      <UniqueIdentifier>{925988e2-3d51-404d-8bb4-2604ab730cfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{bbb0916d-789f-4243-a8cd-45a88637bacf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

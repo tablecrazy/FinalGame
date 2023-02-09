@@ -10,32 +10,43 @@ using namespace std;
 
 namespace Tmpl8
 {
+	//mouse sprite
+	Sprite shuriken(new Surface("assets/cursor1.png"), 1);
+
+	//backgroundSprite
+	Sprite introBc(new Surface("assets/IntroBC.png"), 1);
+	Sprite bc(new Surface("assets/backgroundOr.png"), 1);
+	Sprite bcD(new Surface("assets/background.png"), 1);
+	Sprite bcBnW(new Surface("assets/backgroundBnW.png"), 1);
+
+	//intro sprites
+	Sprite bigNinjaEyes(new Surface("assets/bigNinjaEyes.tga"), 6);
+
+	//ending sprites
+	Sprite bigNinja(new Surface("assets/bigNinja.png"), 1);
+	Sprite bigNinjaS(new Surface("assets/bigNinjaS.png"), 1);
+
+	Sprite youLost(new Surface("assets/YouLost.png"), 1);
+	
 	
 	// -----------------------------------------------------------
 	// Initialize the application
 	// -----------------------------------------------------------
-	
+	vec2 mousePos = {0, 0};
 
 	void Game::Init()
 	{
-		
+		ShowCursor(false);
 		this->ninja = new Ninja(screen);
 
-		ninja->playerPos.x = 200;
-		ninja->playerPos.y = 20;
+		this->mapGenerator = new MapGenerator(screen, ninja, spikes);
 
-		this->spikes = new Spikes(screen);
-		this->key = new Key(screen);
-
-		for (int i = 0; i < buffsAmmount; i++)
+		for (int i = 0; i < buttonAmmount; i++)
 		{
-			buffs.push_back(Buffs{});
+			button.push_back(Button{screen});
 		}
 
-		for (int i = 0; i < objAmmount; i++)
-		{
-			obj.push_back(Object{});
-		}
+		mapGenerator->Init();
 	}
 	
 	// -----------------------------------------------------------
@@ -45,40 +56,148 @@ namespace Tmpl8
 	{
 		
 	}
-
+	
 	// -----------------------------------------------------------
 	// Main application tick function
 	// -----------------------------------------------------------
 	void Game::Tick(float deltaTime)
 	{
-		
-
 		srand(getpid());
 
 		deltaTime /= 1000;
 
 		screen->Clear(0);
+		printf("Health: %d \n", ninja->currentHealth);
+		switch (gameState)
+		{
+		case GameState::game:
 
-		ninja->Update();
+			printf("IGRAAAAAA");
+			
+			
+			if (mapGenerator->level == 0)
+			{
+				introBc.Draw(screen, 0, 0);
+			}
+			else
+			{
+				bc.Draw(screen, 0, 0);
+			}
 
-		spikes->Update(ninja);
+			ninja->Update();
 
-		key->Update(screen, ninja, 50, 50);
+			mapGenerator->LoadLevel(deltaTime);
 
-		obj[0].Spawn(screen, 200, 300, 75, 75, ninja, Type::RECTANGLE);
-		obj[1].Spawn(screen, 500, 300, 75, 75, ninja, Type::TUNNEL);
-		//obj[0].Spawn(screen, 500, 300, 75, 150, ninja, Type::TUNNEL);
-		
-		buffs[0].Update(screen, BuffType::TimeSlow, ninja, spikes, 150, 600, deltaTime);
-		buffs[1].Update(screen, BuffType::Speed, ninja, spikes, 300, 600, deltaTime);
-		buffs[2].Update(screen, BuffType::Speed, ninja, spikes, 450, 600, deltaTime);
-		buffs[3].Update(screen, BuffType::TimeSlow, ninja, spikes, 600, 600, deltaTime);
-		
-		m_time += deltaTime;
-		DifficultyProgression();
+			if (mapGenerator->level == 5)
+			{
+				button[5].Update(ButtonType::Quit, 800, 500, 75, 300);
+			}
+
+			m_time += deltaTime;
+
+			if (ninja->dead == true)
+			{
+				gameState = GameState::death;
+			}
+
+			if (GetAsyncKeyState(VK_ESCAPE)) gameState = GameState::paused;
+			break;
+		case GameState::mainMenu:
+			bcD.Draw(screen, 0, 0);
+			button[0].Update(ButtonType::StartGame, 800, 400, 75, 300);
+			button[1].Update(ButtonType::Quit, 800, 600, 75, 300);
+			break;
+		case GameState::paused:
+			
+			bcBnW.Draw(screen, 0, 0);
+			button[2].Update(ButtonType::Continue, 800, 400, 75, 300);
+			button[3].Update(ButtonType::Quit, 800, 600, 75, 300);
+			break;
+		case GameState::death:
+			fakeNinjaSpeed = 10; 
+			fakeNinjaPosition += fakeNinjaSpeed;
+			if (fakeNinjaPosition > 1100 - 600)
+			{
+				fakeNinjaPosition = 1100 - 600;
+
+				button[4].Update(ButtonType::Quit, 800, 500, 75, 300);
+
+				youLost.Draw(screen, 740, 100);
+				bigNinjaS.Draw(screen, 500, fakeNinjaPosition + 350);
+
+			}else bigNinja.Draw(screen, 650, fakeNinjaPosition);
+			break;
+		}
 		
 	}
 
+	void Game::MouseMove(int x, int y)
+	{
+		mousePos.x = x;
+		mousePos.y = y;
+
+		shuriken.Draw(screen, mousePos.x - 20, mousePos.y -20);
+		switch (gameState)
+		{
+		case GameState::game:
+			button[5].InRange(mousePos.x, mousePos.y);
+			break;
+
+		case GameState::mainMenu:
+			button[0].InRange(mousePos.x, mousePos.y);
+			button[1].InRange(mousePos.x, mousePos.y);
+			break;
+
+		case GameState::paused:
+
+			button[2].InRange(mousePos.x, mousePos.y);
+			button[3].InRange(mousePos.x, mousePos.y);
+			//pause stuff menu
+			break;
+
+		case GameState::death:
+			button[4].InRange(mousePos.x, mousePos.y);
+			break;
+		}
+	
+	}
+
+	void Game::MouseDown(int buttons)
+	{
+		if (button[0].clickable == true)
+		{
+			ninja->currentHealth = 100;
+			ninja->jumpForce = 1.25f;
+			ninja->maximumAcceleration = 23;
+
+			gameState = GameState::game;
+			button[0].clickable = false;
+		}
+		if (button[1].clickable)
+		{
+			SDL_Quit();
+			return;
+		}
+		if (button[2].clickable)
+		{
+			gameState = GameState::game;
+		}
+		if (button[3].clickable)
+		{
+			SDL_Quit();
+			
+		}
+		if (button[4].clickable)
+		{
+			SDL_Quit();
+			
+		}
+		if (button[5].clickable)
+		{
+			SDL_Quit();
+
+		}
+	}
 
 	void Game::DifficultyProgression()
 	{

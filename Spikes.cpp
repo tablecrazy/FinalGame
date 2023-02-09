@@ -6,7 +6,7 @@
 
 namespace Tmpl8
 {
-	Sprite spikes(new Surface("assets/at2.png"), 1);
+	Sprite spikes(new Surface("assets/spikes.png"), 1);
 
 	Spikes::Spikes() {}
 
@@ -23,14 +23,14 @@ namespace Tmpl8
 
 	void Spikes::Draw(Surface* screen)
 	{
-		//spikes.Draw(screen, spikesPos.x, spikesPos.y);
+		spikes.Draw(screen, spikesPos.x, spikesPos.y);
 
 		DrawCollider(screen);
 	}
 
 	void Spikes::DrawCollider(Surface* s)
 	{
-		s->Line(0, spikesPos.y, 800, spikesPos.y, 0xF12F25);
+		//s->Line(0, spikesPos.y, 1920, spikesPos.y, 0xF12F25);
 		Move();
 	}
 
@@ -44,7 +44,7 @@ namespace Tmpl8
 		if (player->playerPos.y > (spikesPos.y - 50))
 		{
 			player->playerPos.y = spikesPos.y - 50;
-			player->speed = -30;
+			player->speed = -25;
 
 			player->TakeDamage(damage);
 		}

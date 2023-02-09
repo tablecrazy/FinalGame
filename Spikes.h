@@ -10,17 +10,20 @@ namespace Tmpl8 {
 	public:
 		Spikes();
 		Spikes(Surface* screen);
+
 		void Update(Ninja* player);
 		void Draw(Surface* screen);
 
-		vec2 spikesPos{ 0 , 900 };
-		float speed = 0.2;
+		vec2 spikesPos{ 0 , 1080 };
+
+		float speed = 0.5;
 		float newSpeed = speed;
 
 	private:
 
 		/*VARIABLES*/
 		Surface* m_screen;
+
 		Ninja* ninja;
 
 		int damage = 25;

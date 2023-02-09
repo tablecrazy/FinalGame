@@ -98,21 +98,29 @@ void Surface::Centre( char* a_String, int y1, Pixel color )
 
 void Surface::Print( char* a_String, int x1, int y1, Pixel color )
 {
-	if (!fontInitialized) 
+	if (!fontInitialized)
 	{
 		InitCharset();
 		fontInitialized = true;
 	}
+	int strLength = (int)(strlen(a_String));
+	int strSize = strLength * 5;
+
+	if (x1 + strSize > m_Width) return;
+	if (y1 + 5 > m_Height) return;
+	if (x1 < 0) return;
+	if (y1 < 0) return;
+
 	Pixel* t = m_Buffer + x1 + y1 * m_Pitch;
-	for ( int i = 0; i < (int)(strlen( a_String )); i++, t += 6 )
-	{	
+	for (int i = 0; i < strLength; i++, t += 6)
+	{
 		long pos = 0;
 		if ((a_String[i] >= 'A') && (a_String[i] <= 'Z')) pos = s_Transl[(unsigned short)(a_String[i] - ('A' - 'a'))];
-													 else pos = s_Transl[(unsigned short)a_String[i]];
+		else pos = s_Transl[(unsigned short)a_String[i]];
 		Pixel* a = t;
 		char* c = (char*)s_Font[pos];
-		for ( int v = 0; v < 5; v++, c++, a += m_Pitch ) 
-			for ( int h = 0; h < 5; h++ ) if (*c++ == 'o') *(a + h) = color, *(a + h + m_Pitch) = 0;
+		for (int v = 0; v < 5; v++, c++, a += m_Pitch)
+			for (int h = 0; h < 5; h++) if (*c++ == 'o') *(a + h) = color, * (a + h + m_Pitch) = 0;
 	}
 }
 

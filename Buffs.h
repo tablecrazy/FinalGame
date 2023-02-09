@@ -18,37 +18,38 @@ namespace Tmpl8 {
 	{
 	public:
 		Buffs();
-		Buffs(Surface* screen);
-		void Update(Surface* s, BuffType type, Ninja* player, Spikes* spikes, float posX, float posY, float deltatime);
-		void Draw(Surface* screen, float posX, float posY, int color);
+		Buffs(Surface* screen, Ninja* player, Spikes* spikes);
+
+		void Update(BuffType type, float posX, float posY, float deltatime);
+		void Draw(float posX, float posY, int color);
+
 		vec2 position{ 300 , 700 };
 
 	private:
 
 		/*VARIABLES*/
-		Ninja* ninja;
-		Spikes* spikes;
+		Ninja* m_ninja;
+		Spikes* m_spikes;
 		Surface* m_screen;
 
 		float m_time = 1;
 
 		bool collided = false;
-		bool speedCheck, shiledCheck, timeSlowCheck;
 		
 
 		BuffType buffType;
 
+		std::vector<Sprite>buffSprites[4];
+
 		/*METHODS*/
 
-		void DrawCollider(Surface* s, float x, float y, float r, int color);
+		void DrawCollider(float x, float y, float r, int color);
 
-		void Collides(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY, float deltatime);
+		void Collides(BuffType buffType, float posX, float posY, float deltatime);
 
-		void UIStats(Surface* s, Ninja* player, BuffType buffType, std::string strVal, int intVal, float yPos, int color);
+		void UIStats(BuffType buffType, std::string strVal, int intVal, float yPos, int color);
 
-		void ShieldBuffCheck(Surface* s, BuffType buffType, Ninja* player, float deltatime);
-
-		void TimeSlowBuffCheck(Surface* s, BuffType buffType, Spikes* spikes, float deltatime);
+		void TimeSlowBuffCheck( BuffType buffType, float deltatime);
 
 	};
 

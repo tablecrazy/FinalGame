@@ -8,126 +8,109 @@
 
 namespace Tmpl8
 {
+	Sprite healthSprite(new Surface("assets/HealthBuff.png"), 1);
+	Sprite shieldSprite(new Surface("assets/Shield2.png"), 1);
+	Sprite speedSprite(new Surface("assets/SpeedBuff.png"), 1);
+	Sprite timeSlowSprite(new Surface("assets/TimeSlow.png"), 1);
+
 	std::ostringstream oss;
 	Buffs::Buffs() {}
 
-	Buffs::Buffs(Surface* screen) :
-		m_screen{ screen }
+	Buffs::Buffs(Surface* screen, Ninja* player, Spikes* spikes) :
+		m_screen{ screen },
+		m_ninja{ player },
+		m_spikes{ spikes }
 	{
 	}
 
-	void Buffs::Update(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY, float deltatime)
+	void Buffs::Update(BuffType buffType, float posX, float posY, float deltatime)
 	{
 		if (collided == false)
 		{
 			if (buffType == BuffType::Health)
 			{
-				s->Print("health", posX, posY, 0x96FF00);
-				Draw(s, posX, posY, 0x96FF00);
+				healthSprite.Draw(m_screen, posX - 20, posY - 20);
 			}
 			else if (buffType == BuffType::Speed)
 			{
-				
-				m_time = 3;
-				s->Print("Shadow Step", posX, posY, 0xadd8e6);
-				Draw(s, posX, posY, 0xadd8e6);
+				speedSprite.Draw(m_screen, posX - 20, posY - 20);
 			}
 			else if (buffType == BuffType::Shield)
 			{
-				m_time = 5;
-				s->Print("Shield", posX, posY, 0x0096FF);
-				Draw(s, posX, posY, 0x0096FF);
+				shieldSprite.Draw(m_screen, posX - 20, posY - 20);
 			}
 			else if (buffType == BuffType::TimeSlow)
 			{
-				m_time = 4;
-				s->Print("TimeSlow", posX, posY, 0xFFD700);
-				Draw(s, posX, posY, 0xFFD700);
+				m_time = 5;
+				timeSlowSprite.Draw(m_screen, posX - 20, posY - 20);
 			}
 			
 		}
 		
-		Collides(s, buffType, player, spikes, posX, posY, deltatime);
+		Collides(buffType, posX, posY, deltatime);
+		TimeSlowBuffCheck(buffType, deltatime);
 	}
 
-	void Buffs::Draw(Surface* screen, float posX, float posY, int color)
+	void Buffs::Draw(float posX, float posY, int color)
 	{
-		DrawCollider(screen, posX, posY, 25, color);
+		DrawCollider(posX, posY, 25, color);
 	}
 
-	void Buffs::DrawCollider(Surface* s, float x, float y, float r, int color)
+	void Buffs::DrawCollider(float x, float y, float r, int color)
 	{
 		for (int i = 0; i < 64; i++)
 		{
 			float r1 = (float)i * PI / 32, r2 = (float)(i + 1) * PI / 32;
-			s->Line(x - r * sinf(r1), y - r * cosf(r1),
+			m_screen->Line(x - r * sinf(r1), y - r * cosf(r1),
 				x - r * sinf(r2), y - r * cosf(r2), color);
 		}
 	}
 
-	void Buffs::Collides(Surface* s, BuffType buffType, Ninja* player, Spikes* spikes, float posX, float posY, float deltatime)
+	void Buffs::Collides(BuffType buffType, float posX, float posY, float deltatime)
 	{
-		if (player->playerPos.x <= posX && player->playerPos.x + 50 >= posX && player->playerPos.y <= posY && player->playerPos.y + 50 >= posY && collided == false)
+		if (m_ninja->playerPos.x <= posX && m_ninja->playerPos.x + 50 >= posX && m_ninja->playerPos.y <= posY && m_ninja->playerPos.y + 50 >= posY && collided == false)
 		{
 			
 			if (buffType == BuffType::Health)
 			{
-				//player->currentHealth += 25;
+				m_ninja->currentHealth += 25;
 			}
 			if (buffType == BuffType::Speed)
 			{
-				//player->horizontalSpeed += 5;
+				m_ninja->jumpForce += 0.15f;
+				m_ninja->maximumAcceleration += 5;
 			}
 			else if (buffType == BuffType::Shield)
 			{
-				//player->shield = 1;
-				//ShieldBuff();
+				m_ninja->shield = 1;
 			}
 			else if (buffType == BuffType::TimeSlow)
 			{
-				//spikes->speed /= 2;
-				//TimeSlowBuff();
+				m_spikes->speed /= 2;
 			}
 			collided = true;
 		}
 	}
 
-	void Buffs::ShieldBuffCheck(Surface* s, BuffType buffType, Ninja* player, float deltatime)
-	{
-		if (buffType == BuffType::Shield)
-		{
-			if (player->shield == true)
-			{
-				m_time -= deltatime;
-				printf("ShieldTime: %d\n", (int)m_time + 1);
-				UIStats(s, player, buffType, "Shield", (int)m_time, 35, 0x0096FF);
-			}
-			if (m_time <= 0)
-			{
-				player->shield = false;
-			}
-		}
-		
-	}
-
-	void Buffs::TimeSlowBuffCheck(Surface* s, BuffType buffType, Spikes* spikes, float deltatime)
+	void Buffs::TimeSlowBuffCheck(BuffType buffType, float deltatime)
 	{
 		if (buffType == BuffType::TimeSlow)
 		{
-			if (spikes->speed != spikes->newSpeed)
+			if (m_spikes->speed != m_spikes->newSpeed)
 			{
 				m_time -= deltatime;
 				printf("SlowedTime: %d\n", (int)m_time + 1);
-				UIStats(s, ninja, buffType, "Time Slow", (int)m_time, 50, 0xFFD700);
+				UIStats(buffType, "Time Slow", (int)m_time, 55, 0xFFD700);
 			}
 			if (m_time <= 0)
 			{
-				spikes->speed = spikes->newSpeed;
+				m_spikes->speed = m_spikes->newSpeed;
+				m_time = 5;
 			}
 		}
 	}
 
-	void Buffs::UIStats(Surface* s, Ninja* player, BuffType buffType, std::string strVal, int intVal, float yPos, int color)
+	void Buffs::UIStats(BuffType buffType, std::string strVal, int intVal, float yPos, int color)
 	{
 		int sVal = intVal;
 		std::string str = strVal, intStr;
@@ -142,31 +125,16 @@ namespace Tmpl8
 		int lenght = str.length();
 		char* char_array = new char(lenght + 1);
 		strcpy(char_array, str.c_str());
+
 		
 
-		if (buffType == BuffType::Speed)
+		if (buffType == BuffType::TimeSlow)
 		{
 			for (int i = 0; i < lenght; i++)
-				s->Print(char_array, 730, yPos, color);
+				m_screen->Print(char_array, 10, yPos, color);
 
 			for (int i = 0; i < ilenght; i++)
-				s->Print(ichar_array, 765, yPos, color);
-		}
-		else if (buffType == BuffType::Shield)
-		{
-			for (int i = 0; i < lenght; i++)
-				s->Print(char_array, 730, yPos, color);
-
-			for (int i = 0; i < ilenght; i++)
-				s->Print(ichar_array, 770, yPos, color);
-		}
-		else if (buffType == BuffType::TimeSlow)
-		{
-			for (int i = 0; i < lenght; i++)
-				s->Print(char_array, 730, yPos, color);
-
-			for (int i = 0; i < ilenght; i++)
-				s->Print(ichar_array, 788, yPos, color);
+				m_screen->Print(ichar_array, 68, yPos, color);
 		}
 	}
 };

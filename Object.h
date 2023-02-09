@@ -16,12 +16,12 @@ namespace Tmpl8 {
 	{
 	public:
 		Object();
-		Object(Surface* screen);
-		void Spawn(Surface* s, int x, int y, int init1, int init2, Ninja* player, Type type);
+		Object(Surface* screen, Ninja* player);
+
+		void Spawn(int x, int y, int init1, int init2, Type type);
 
 		bool collides;
 		bool collidesWith;
-		bool rWall, lWall, onWall;
 
 		Type type{ Type::RECTANGLE };
 	private:
@@ -29,19 +29,15 @@ namespace Tmpl8 {
 		/*VARIABLES*/
 		Surface* m_screen;
 
+		Ninja* m_player;
 		
-		
-
 		int init1 = 0, init2 = 0;
-
-		
 
 		/*METHODS*/
 
-		void SpawnRectangle(Surface* s, int x, int y, int init1, int init2, Ninja* player);
+		void SpawnRectangle(int x, int y, int init1, int init2);
 
-		void SpawnTunnel(Surface* s, int x, int y, int init1, int init2, Ninja* player);
-		void SustainVelocity(Ninja* player);
+		void SpawnTunnel(int x, int y, int init1, int init2);
 	};
 
 };

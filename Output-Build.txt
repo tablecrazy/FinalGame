@@ -1,0 +1,24 @@
+﻿Build started...
+1>------ Build started: Project: tmpl_2019-08, Configuration: Debug Win32 ------
+1>Ninja.cpp
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(32,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(32,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(44,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(44,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(47,46): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(47,33): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(50,45): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(50,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(67,75): warning C4244: '*=': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(91,16): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(95,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(99,12): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(138,30): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(140,31): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(154,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(163,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+1>C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\Ninja.cpp(173,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+1>LINK : warning LNK4044: unrecognized option '/lsdl_mixer'; ignored
+1>tmpl_2019-08.vcxproj -> C:\Users\User\Desktop\Materials for Breda\FinalGame\FinalGame-main\tmpl_2019-08_x86_debug.exe
+1>Done building project "tmpl_2019-08.vcxproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

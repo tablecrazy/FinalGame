@@ -10,25 +10,25 @@ namespace Tmpl8 {
 	{
 	public:
 		Key();
-		Key(Surface* screen);
-		void Update(Surface* s, Ninja* player, float posX, float posY);
-		void Draw(Surface* screen, float posX, float posY);
+		Key(Surface* screen, Ninja* player);
+
+		void Update(int value, float posX, float posY);
+		void Draw(float posX, float posY);
 
 		vec2 position{ 300 , 700 };
-		bool won = false;
+
+		bool won = false, collided = false;
 	private:
 
 		/*VARIABLES*/
-		Ninja* ninja;
-
 		Surface* m_screen;
-
+		Ninja* m_player;
 		
 		/*METHODS*/
 
-		void DrawCollider(Surface* s, float x, float y, float r, int color);
+		void DrawCollider(float x, float y, float r, int color);
 
-		void Collides(Ninja* player, float posX, float posY);
+		void Collides(float posX, float posY);
 
 	};
 

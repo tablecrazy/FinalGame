@@ -1,4 +1,5 @@
  #pragma once
+#include "game.h"
 #include "Ninja.h"
 #include "Object.h"
 #include "windows.h"
@@ -6,7 +7,12 @@
 namespace Tmpl8
 {
 	Sprite ninja(new Surface("assets/ninja.png"), 1);
-	Sprite ninjaS(new Surface("assets/ninjaS.png"), 1);
+	Sprite ninjaL(new Surface("assets/ninjaL.png"), 1);
+	Sprite ninjaR(new Surface("assets/ninjaR.png"), 1);
+
+	Game* game;
+
+	
 
 	Ninja::Ninja() {}
 
@@ -15,40 +21,39 @@ namespace Tmpl8
 	{
 	}
 
-	void Ninja::Init()
-	{
-		
-	}
-
 	void Ninja::Update()
 	{
+		game = new Game();
 
 		PlayerGravity();
 
 		Draw(m_screen);
 
-		DrawBorders(0, 750, playerPos.y, playerPos.y);
+		DrawBorders(0, 1860, playerPos.y, playerPos.y);
 
 		Input();
 
-		//PlayerDebug();
-		//printf("isGrounds: %d \n", isGrounded);
+		Death();
+
+		FrameClock();
+
+		Stats(m_screen, "Health: ", currentHealth, 55, 10, 0x96FF00);
+		Stats(m_screen, "Speed: ", speed, 55, 25, 0xadd8e6);
+		Stats(m_screen, "Shield: ", shield, 55, 40, 0x0096FF);
 	}
 
 	void Ninja::Draw(Surface* screen)
 	{
-		if (isGrounded == false)
-		{
+		if (lWall) {
+			ninjaL.Draw(screen, playerPos.x, playerPos.y);
+		}
+		else if (rWall) {
+			ninjaR.Draw(screen, playerPos.x, playerPos.y);
+		}
+		else {
 			ninja.Draw(screen, playerPos.x, playerPos.y);
 		}
-		else
-		{
-			ninjaS.Draw(screen, playerPos.x, playerPos.y);
-		}
-
-		DrawCollider(screen, playerPos.x + 25, playerPos.y + 25, 25);
-		Stats(screen, "Health: ", currentHealth, 10, 0x96FF00);
-		Stats(screen, "Speed: ", horizontalSpeed, 25, 0xadd8e6);
+		
 	}
 
 	void Ninja::Input()
@@ -57,23 +62,40 @@ namespace Tmpl8
 		if (GetAsyncKeyState(VK_RIGHT)) playerPos.x += horizontalSpeed;
 		if (GetAsyncKeyState(VK_UP) && isColliding == true) playerPos.y -= horizontalSpeed;
 		if (GetAsyncKeyState(VK_DOWN) && isColliding == true) playerPos.y += horizontalSpeed;
-		if (GetAsyncKeyState(VK_SPACE) && isGrounded == true) speed *= 1.25f;
+		if (GetAsyncKeyState(VK_SPACE) && isGrounded == true) speed *= jumpForce;
 	}
 
 	void Ninja::TakeDamage(int damageTaken)
 	{
-		if (shield == true)
+		if (invinsFrames <= 0)
 		{
-			shield = false;
+			if (shield == true)
+			{
+				shield = false;
+			}
+			else currentHealth -= damageTaken;
+			invinsFrames = 30;
+			
 		}
-		else currentHealth -= damageTaken;
+	}
+
+	void Ninja::FrameClock()
+	{
+		if (invinsFrames > 0)
+		{
+			invinsFrames -= 1;
+		}
 	}
 
 	void Ninja::Death()
 	{
 		if (currentHealth <= 0)
 		{
-			printf("DEAD\n");
+			dead = true;
+		}
+		else
+		{
+			dead = false;
 		}
 			
 	}
@@ -82,6 +104,17 @@ namespace Tmpl8
 	{
 		playerPos.y += speed;
 		speed += 1.0f;
+
+		speed = min(maximumAcceleration, max(-maximumAcceleration, speed));
+
+	}
+
+	void Ninja::SustainVelocity()
+	{
+		if (speed >= 0 && speed <= 1 && isGrounded == true && isColliding == false)
+		{
+			speed -= 10;
+		}
 	}
 
 	void Ninja::DrawCollider(Surface* s, float x, float y, float r)
@@ -94,26 +127,15 @@ namespace Tmpl8
 		}
 	}
 
-	void Ninja::Stats(Surface* s, std::string strVal, int intVal, float yPos, int color)
+	void Ninja::Stats(Surface* s, std::string strVal, int intVal, float numX, float yPos, int color)
 	{
-		int sVal = intVal;
-		std::string str = strVal, intStr;
-		std::stringstream stream;
-		stream << sVal;
-		stream >> intStr;
+		std::string str = strVal;
 
-		int ilenght = intStr.length();
-		char* ichar_array = new char(ilenght + 1);
-		strcpy(ichar_array, intStr.c_str());
+		std::string intStr = std::to_string(intVal);
 
-		int lenght = str.length();
-		char* char_array = new char(lenght + 1);
-		strcpy(char_array, str.c_str());
+		s->Print(&(str)[0], 10, yPos, color);
 
-		for (int i = 0; i < lenght; i++)
-			s->Print(char_array, 720, yPos, color);
-		for (int i = 0; i < ilenght; i++)
-			s->Print(ichar_array, 760, yPos, color);
+		s->Print(&(intStr)[0], numX, yPos, color);
 	}
 
 	void Ninja::PlayerDebug()
@@ -125,19 +147,9 @@ namespace Tmpl8
 
 	void Ninja::DrawBorders(int xMin, int xMax, int yMin, int yMax)
 	{
-		if (playerPos.x < (xMin))
+		if (playerPos.y > (2000 - 50))
 		{
-			playerPos.x = xMin;
-
-		}
-		if (playerPos.x > (xMax))
-		{
-			playerPos.x = xMax;
-
-		}
-		if (playerPos.y > (700 - 50))
-		{
-			playerPos.y = 700 - 50;
+			playerPos.y = 2000 - 50;
 			speed = -speed * 0.8f;
 			isGrounded = true;
 		}
@@ -149,6 +161,10 @@ namespace Tmpl8
 		{
 			playerPos.y = 0;
 		}
+		lWall = playerPos.x < xMin;
+		rWall = playerPos.x > xMax;
+		playerPos.x = min(max(playerPos.x, xMin), xMax);
+		playerPos.y = min(max(playerPos.y, 0), 2000 - 50);
 	}
 };
 

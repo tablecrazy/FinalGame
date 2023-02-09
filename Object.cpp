@@ -9,87 +9,74 @@ namespace Tmpl8
 
 	Object::Object() {}
 
-	Object::Object(Surface* screen) :
-		m_screen{ screen }
+	Object::Object(Surface* screen, Ninja* player) :
+		m_screen{ screen },
+		m_player{player}
 	{
 	}
 
 	
 
-	void Object::Spawn(Surface* s, int x, int y, int init1, int init2, Ninja* player, Type type)
+	void Object::Spawn(int x, int y, int init1, int init2, Type type)
 	{
 		if (type == Type::RECTANGLE)
 		{
-			Object::SpawnRectangle(s, x, y, init1, init2, player);
+			Object::SpawnRectangle(x, y, init1, init2);
 		}
 		else if (type == Type::TUNNEL)
 		{
-			Object::SpawnTunnel(s, x, y, init1, init2, player);
+			Object::SpawnTunnel(x, y, init1, init2);
 		}
-
-		SustainVelocity(player);
+		m_player->SustainVelocity();
 	}
 
-	void Object::SpawnRectangle(Surface* s, int x, int y, int init1, int init2, Ninja* player)
+	void Object::SpawnRectangle(int x, int y, int init1, int init2)
 	{
-		s->Line(x - init1, y - init1, x - init1, y + init1, 0xffffff);//left
-		s->Line(x - init1, y + init1, x + init2, y + init1, 0xffffff);//down
-		s->Line(x + init2, y - init1, x + init2, y + init1, 0xffffff);//right
-		s->Line(x - init1, y - init1, x + init2, y - init1, 0xffffff);//top
+		//m_screen->Line(x - init1, y - init1, x - init1, y + init1, 0xffffff);//left
+		//m_screen->Line(x - init1, y + init1, x + init2, y + init1, 0xffffff);//down
+		//m_screen->Line(x + init2, y - init1, x + init2, y + init1, 0xffffff);//right
+		//m_screen->Line(x - init1, y - init1, x + init2, y - init1, 0xffffff);//top
 
-		if (player->playerPos.x <= x + init2 && player->playerPos.x + 50 >= x - init1 && player->playerPos.y <= y + init1 && player->playerPos.y + 50 >= y - init1)
-		{
-			player->isGrounded = true;
-
-			player->speed = -player->speed * 0.9f;
-
-			if (GetAsyncKeyState(VK_SPACE) && player->isGrounded == true) player->speed *= 1.25f;
+		bool colliding = (m_player->playerPos.x <= x + init2 && m_player->playerPos.x + 50 >= x - init1 && m_player->playerPos.y <= y + init1 && m_player->playerPos.y + 50 >= y - init1);
+		if (colliding) {
+			m_player->isGrounded = true;
+			m_player->speed = -m_player->speed * 0.9f;
+			if (GetAsyncKeyState(VK_SPACE) && m_player->isGrounded) {
+				m_player->speed *= 1.25f;
+			}
 		}
-		if (player->playerPos.x <= x + init2 && player->playerPos.x + 50 >= x - init1 && player->playerPos.y == y + init1)
-		{
-			player->playerPos.y = y + init1 + 5;
+		if (colliding && m_player->playerPos.y == y + init1) {
+			m_player->playerPos.y = y + init1 + 5;
 		}
-		if (player->playerPos.x == x - (init1 + 50) && player->playerPos.y <= y + init1 && player->playerPos.y + 50 >= y - init1)
-		{
-			player->playerPos.x = x - (init1 + 55);
-			player->isColliding = true;
+		if (colliding && m_player->playerPos.x == x - (init1 + 50)) {
+			m_player->playerPos.x = x - (init1 + 55);
+			m_player->isColliding = true;
+			m_player->lWall = true;
 		}
-		if (player->playerPos.x == x + init2 && player->playerPos.y <= y + init1 && player->playerPos.y + 50 >= y - init1)
-		{
-			player->playerPos.x = x + init2 + 5;
-			player->isColliding = true;
+		if (colliding && m_player->playerPos.x == x + init2) {
+			m_player->playerPos.x = x + init2 + 5;
+			m_player->isColliding = true;
+			m_player->rWall = true;
 		}
 		
 	}
 
-	void Object::SpawnTunnel(Surface* s, int x, int y, int init1, int init2, Ninja* player)
+	void Object::SpawnTunnel(int x, int y, int init1, int init2)
 	{
-		s->Line(x - init1, y + init1, x + init2, y + init1, 0xffffff);//top
-		s->Line(x - init1, y - init1, x + init2, y - init1, 0xffffff);//down
+		//m_screen->Line(x - init1, y + init1, x + init2, y + init1, 0xffffff);//top
+		//m_screen->Line(x - init1, y - init1, x + init2, y - init1, 0xffffff);//down
 
-		if (player->playerPos.x <= x + init2 && player->playerPos.x + 50 >= x - init1 && player->playerPos.y <= y + init1 && player->playerPos.y + 50 >= y - init1)
-		{
-			player->isGrounded = true;
-
-			player->isColliding = true;
-
-			player->speed = -player->speed * 0.9f;
-
-			if (GetAsyncKeyState(VK_SPACE) && player->isGrounded == true) player->speed *= 1.25f;
-
+		bool colliding = (m_player->playerPos.x <= x + init2 && m_player->playerPos.x + 50 >= x - init1 && m_player->playerPos.y <= y + init1 && m_player->playerPos.y + 50 >= y - init1);
+		if (colliding) {
+			m_player->isGrounded = true;
+			m_player->isColliding = true;
+			m_player->speed = -m_player->speed * 0.9f;
+			if (GetAsyncKeyState(VK_SPACE) && m_player->isGrounded) {
+				m_player->speed *= 1.25f;
+			}
 		}
-		if (player->playerPos.x <= x + init2 && player->playerPos.x + 50 >= x - init1 && player->playerPos.y == y + init1)
-		{
-			player->playerPos.y = y + init1 + 5;
-			
-		}
-	}
-
-	void Object::SustainVelocity(Ninja* player)
-	{
-		if (player->speed == 0 && player->isGrounded == true && player->isColliding == false)
-		{
-			player->speed -= 10;
+		if (colliding && m_player->playerPos.y == y + init1) {
+			m_player->playerPos.y = y + init1 + 5;
 		}
 	}
 };

@@ -29,9 +29,6 @@ namespace Tmpl8
 	{
 		Draw(s, yPos);
 		Move(speed);
-		//printf("%d\n", (int)projPos.x);
-		////printf("%d\n", side);
-		//printf("Bounces Left: %d\n", bouncesLeft);
 	}
 
 	void Projectile::Move(float speed)

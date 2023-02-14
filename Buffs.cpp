@@ -99,7 +99,6 @@ namespace Tmpl8
 			if (m_spikes->speed != m_spikes->newSpeed)
 			{
 				m_time -= deltatime;
-				printf("SlowedTime: %d\n", (int)m_time + 1);
 				UIStats(buffType, "Time Slow", (int)m_time, 55, 0xFFD700);
 			}
 			if (m_time <= 0)
@@ -125,8 +124,6 @@ namespace Tmpl8
 		int lenght = str.length();
 		char* char_array = new char(lenght + 1);
 		strcpy(char_array, str.c_str());
-
-		
 
 		if (buffType == BuffType::TimeSlow)
 		{

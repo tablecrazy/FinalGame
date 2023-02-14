@@ -37,7 +37,6 @@ namespace Tmpl8
 			case 0:
 				spikes->speed = 0;
 				ninja->playerPos = { 150, 0 };
-				printf("hate nig");
 				break;
 			case 1:
 				spikes->spikesPos = { 0, 1080 };
@@ -70,8 +69,6 @@ namespace Tmpl8
 
 			
 		}
-
-		//call the pos of the spikes here in a switch case HAWWY
 
 		this->key = new Key(m_screen, ninja);
 

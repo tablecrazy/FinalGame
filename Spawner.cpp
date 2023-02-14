@@ -31,15 +31,6 @@ namespace Tmpl8
 		Move();
 		Shoot(screen, deltatime);
 		sp.Draw(screen, sPos.x, sPos.y);
-
-		printf("proj %d\n", projj.size());
-		printf("used %d\n", usedprojj.size());
-		
-		if (projj.size() == 0)
-		{
-			printf("I HATE NIGGERS\n");
-		}
-
 	}
 
 	void Spawner::Move()

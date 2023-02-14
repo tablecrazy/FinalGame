@@ -24,7 +24,7 @@ namespace Tmpl8
 		if (collided == false)
 		{
 			Bounce(snSide, posX, posY, size, speed);
-			//Draw(snSide, posX, posY, 0xff0000, size);
+
 			Collides();
 		}
 		
@@ -52,7 +52,6 @@ namespace Tmpl8
 
 			shurikenPos.x += pointReached ? -speed : speed;
 		}
-		//DrawCollider(shurikenPos.x, shurikenPos.y, 15, 0xff0000);
 		
 		bshuriken.SetFrame(frame);
 		bshuriken.Draw(m_screen, shurikenPos.x - 25, shurikenPos.y - 20);

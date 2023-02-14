@@ -84,11 +84,6 @@ private:
 	void DifficultyProgression();
 
 	void TimePassed(float time);
-
-	void Intro()
-	{
-
-	}
 };
 
 }; // namespace Tmpl8

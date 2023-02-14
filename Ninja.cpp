@@ -1,5 +1,5 @@
  #pragma once
-#include "game.h"
+
 #include "Ninja.h"
 #include "Object.h"
 #include "windows.h"
@@ -9,8 +9,6 @@ namespace Tmpl8
 	Sprite ninja(new Surface("assets/ninja.png"), 1);
 	Sprite ninjaL(new Surface("assets/ninjaL.png"), 1);
 	Sprite ninjaR(new Surface("assets/ninjaR.png"), 1);
-
-	Game* game;
 
 	
 
@@ -23,8 +21,6 @@ namespace Tmpl8
 
 	void Ninja::Update()
 	{
-		game = new Game();
-
 		PlayerGravity();
 
 		Draw(m_screen);
@@ -89,15 +85,7 @@ namespace Tmpl8
 
 	void Ninja::Death()
 	{
-		if (currentHealth <= 0)
-		{
-			dead = true;
-		}
-		else
-		{
-			dead = false;
-		}
-			
+		dead = (currentHealth <= 0);
 	}
 
 	void Ninja::PlayerGravity()

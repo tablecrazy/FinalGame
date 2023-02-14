@@ -1,6 +1,6 @@
 #include "game.h"
 #include "surface.h"
-#include <cstdio> //printf
+#include <cstdio>
 #include <array>
 #include <iostream>
 #include <string>
@@ -67,13 +67,10 @@ namespace Tmpl8
 		deltaTime /= 1000;
 
 		screen->Clear(0);
-		printf("Health: %d \n", ninja->currentHealth);
+		//printf("Health: %d \n", ninja->currentHealth);
 		switch (gameState)
 		{
 		case GameState::game:
-
-			printf("IGRAAAAAA");
-			
 			
 			if (mapGenerator->level == 0)
 			{
@@ -173,29 +170,13 @@ namespace Tmpl8
 			gameState = GameState::game;
 			button[0].clickable = false;
 		}
-		if (button[1].clickable)
+		if (button[1].clickable || button[3].clickable || button[4].clickable || button[5].clickable)
 		{
 			SDL_Quit();
-			return;
 		}
 		if (button[2].clickable)
 		{
 			gameState = GameState::game;
-		}
-		if (button[3].clickable)
-		{
-			SDL_Quit();
-			
-		}
-		if (button[4].clickable)
-		{
-			SDL_Quit();
-			
-		}
-		if (button[5].clickable)
-		{
-			SDL_Quit();
-
 		}
 	}
 
